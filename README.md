@@ -2,6 +2,11 @@
 
 This installer should work on any Debian based OS. This also includes Ubuntu. If it detects that CSF is already installed, it will abort installation.
 
+**Install CURL first**
+```
+apt-get install curl -y
+```
+
 ### Run the installer with the following command
 ```
 bash <( curl -sSL https://raw.githubusercontent.com/unixxio/install-csf/main/install-csf.sh )
