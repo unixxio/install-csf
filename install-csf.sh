@@ -22,7 +22,7 @@ user_ip="$(who am i --ips | awk '{print $5}' | sed 's/[()]//g')"
 user_hostname="$(host ${user_ip} | awk '{print $5}' | sed 's/.$//')"
 network_range="$(hostname -I | rev | cut -d. -f2-4 | rev).0/24"
 
-packages="libwww-perl liblwp-protocol-https-perl libgd-graph-perl iptables"
+packages="libwww-perl liblwp-protocol-https-perl libgd-graph-perl iptables unzip sendmail"
 
 # Check if script is run as root
 if [[ $EUID -ne 0 ]]; then
@@ -65,6 +65,7 @@ if [[ ! -d /etc/csf ]]; then
     # Replace configs
     sed -i 's/TESTING = "1"/TESTING = "0"/g' /etc/csf/csf.conf
     sed -i 's/IGNORE_ALLOW = "0"/IGNORE_ALLOW = "1"/g' /etc/csf/csf.conf
+    sed -i 's/RESTRICT_SYSLOG = "0"/RESTRICT_SYSLOG = "1"/g' /etc/csf/csf.conf
     sed -i 's/TCP_IN = "20,21,22,25,53,80,110,143,443,465,587,993,995"/TCP_IN = "20,21,80,443,35000:35999"/g' /etc/csf/csf.conf
     sed -i 's/TCP6_IN = "20,21,22,25,53,80,110,143,443,465,587,993,995"/TCP6_IN = "20,21,80,443,35000:35999"/g' /etc/csf/csf.conf
     sed -i 's/TCP_OUT = "20,21,22,25,53,80,110,113,443,587,993,995"/TCP_OUT = "1:65535"/g' /etc/csf/csf.conf
